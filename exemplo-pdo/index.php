@@ -35,7 +35,7 @@ function main(array $argv, int $argc): void {
 		// $clientDTO->remove(10);
 		$clientDTO->save($client);
 	}
-	catch(ConnectionFactory $e) {
+	catch(ConnectionFactoryException $e) {
 		print($e->getMessage());
 	}
 	catch(NotImplementedException $e) {
