@@ -76,7 +76,7 @@ class ClientDTO implements DTO{
 
 	private function throwConnectionErrorIfTheConnectionIsNull(): void {
 		if(is_null($this->conn)) {
-			throw new ConnectionFactoryExcetion("The connection cannot be established");
+			throw new ConnectionFactoryException();
 		}
 	}
 }
