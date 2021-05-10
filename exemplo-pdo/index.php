@@ -32,7 +32,7 @@ function main(array $argv, int $argc): void {
     $client = $clientDTO->findById(10);
     print_r($client);
 
-    // $clientDTO->remove(10);
+    $clientDTO->remove(10);
     $clientDTO->save($client);
   }
   catch(ConnectionFactoryException $e) {
