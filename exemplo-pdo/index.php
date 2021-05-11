@@ -18,15 +18,12 @@ function main(array $argv, int $argc): void {
     $clientRepository->findAll();
 
 
-
-
     print("findAll\n");
     $clients = $clientRepository->findAll();
     foreach($clients as $client) {
        print_r($client);
     }
 
-    
      
     print("findById\n");
     $client = $clientRepository->findById(10);
