@@ -16,11 +16,11 @@ class ConnectionFactory {
 
 
     public static function getFactory(): self {
-        if (is_null(self::$factory)) {
-          self::$factory = new ConnectionFactory();
-        }
+      if (is_null(self::$factory)) {
+        self::$factory = new ConnectionFactory();
+      }
         
-        return self::$factory;
+      return self::$factory;
     }
 
     public function closeConnection(): void {
@@ -30,16 +30,16 @@ class ConnectionFactory {
     }
 
     public function getConnection(): ?\PDO {
-        try {
-          if (is_null($this->db)) {
-            $this->db = new \PDO($this->connectionString);
-          }
+      try {
+        if (is_null($this->db)) {
+          $this->db = new \PDO($this->connectionString);
         }
-        catch(\PDOException $e) {
-          throw new ConnectionFactoryException($e);
-        }
+      }
+      catch(\PDOException $e) {
+        throw new ConnectionFactoryException($e);
+      }
 
-        return $this->db;
+      return $this->db;
     }
 
     private function loadConfiguration(): void {
@@ -48,11 +48,11 @@ class ConnectionFactory {
       $params = parse_ini_file($filenameconfig);
       
       $this->connectionString = sprintf("pgsql:host=%s;port=%d;dbname=%s;user=%s;password=%s",
-          $params['host'], 
-          $params['port'], 
-           $params['database'], 
-           $params['user'], 
-           $params['password']
-        );
+        $params['host'], 
+        $params['port'], 
+        $params['database'], 
+        $params['user'], 
+        $params['password']
+      );
     }
 }
