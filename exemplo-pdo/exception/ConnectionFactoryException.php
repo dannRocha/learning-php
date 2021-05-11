@@ -1,10 +1,10 @@
 <?php
 
-class ConnectionFactoryException extends Exception {
-  public function __construct() {
+class ConnectionFactoryException extends PDOException {
+  public function __construct(Exception $err) {
     $this->message = 
-      sprintf("Error: %s - The connection cannot be established - File: [%s] - Line: [%d]", 
-        self::class, $this->file, $this->line 
+      sprintf("Error: %s - The connection cannot be established \n%s", 
+        self::class, $err->getMessage()
       ); 
   }
 }

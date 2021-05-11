@@ -1,5 +1,7 @@
 <?php
 
+require_once("exception/ConnectionFactoryException.php");
+
 class ConnectionFactory {
 
     private static ?self $factory = null;
@@ -26,8 +28,13 @@ class ConnectionFactory {
     }
 
     public function getConnection(): PDO {
-        if (is_null($this->db)) {
-          $this->db = new PDO($this->connectionString);
+        try {
+          if (is_null($this->db)) {
+            $this->db = new PDO($this->connectionString);
+          }
+        }
+        catch(PDOException $e) {
+          throw new ConnectionFactoryException($e);
         }
            
         return $this->db;
