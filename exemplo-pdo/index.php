@@ -1,6 +1,6 @@
 <?php
 
-require_once("dto/ClientDTO.php");
+require_once("repository/ClientRepository.php");
 require_once("entity/Client.php");
 require_once("exception/ConnectionFactoryException.php");
 require_once("exception/NotImplementedException.php");
@@ -11,17 +11,17 @@ main($_SERVER['argv'], count($_SERVER['argv']));
 function main(array $argv, int $argc): void {
   try {
      
-    $clientDTO = new ClientDTO(ConnectionFactory::getFactory());
-    $clientDTO1 = new ClientDTO(ConnectionFactory::getFactory());
+    $clientRepository = new ClientRepository(ConnectionFactory::getFactory());
+    $clientRepository1 = new ClientRepository(ConnectionFactory::getFactory());
      
-    $clients = $clientDTO->findAll();
-    $clientDTO->findAll();
+    $clients = $clientRepository->findAll();
+    $clientRepository->findAll();
 
 
 
 
     print("findAll\n");
-    $clients = $clientDTO->findAll();
+    $clients = $clientRepository->findAll();
     foreach($clients as $client) {
        print_r($client);
     }
@@ -29,11 +29,11 @@ function main(array $argv, int $argc): void {
     
      
     print("findById\n");
-    $client = $clientDTO->findById(10);
+    $client = $clientRepository->findById(10);
     print_r($client);
 
-    $clientDTO->remove(10);
-    $clientDTO->save($client);
+    $clientRepository->remove(10);
+    $clientRepository->save($client);
   }
   catch(ConnectionFactoryException $e) {
     print($e->getMessage());

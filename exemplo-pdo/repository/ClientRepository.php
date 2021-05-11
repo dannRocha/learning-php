@@ -4,10 +4,10 @@ require_once("entity/Client.php");
 require_once("exception/ConnectionFactoryException.php");
 require_once("exception/NotImplementedException.php");
 require_once("factory/ConnectionFactory.php");
-require_once("interface/dto.php");
+require_once("interface/Repository.php");
 
 
-class ClientDTO implements DTO{
+class ClientRepository implements Repository{
 
   private ConnectionFactory $conn;
   private const LIMIT_FIND_ALL = 10;

@@ -14,7 +14,7 @@ interface Priority {
 }
 
 
-interface DTO {
+interface Repository {
   function findAll(): array;
   function findById(int $id): ?object;
   function save(): bool;
@@ -108,7 +108,7 @@ class ConnectionFactoryExcetion extends Exception {
 }
 
 
-class ClientDTO implements DTO {
+class ClientRepository implements Repository {
 
   private ?ConnectFactory  $conn = null;
   
@@ -172,16 +172,16 @@ try {
 
   $conn = null;
   $client = new ClientPriority("Daniel", "Rocha", 0);
-  $clientDTO = new ClientDTO($conn);
+  $clientRepository = new ClientRepository($conn);
   
   echo ($client . "\n");
   echo ('ID           : ' . Client::$id);
   echo (Client::staticMethod()) . "\r";
   
-  echo "\r - findById  : " .(($clientDTO->findById(1)) ? "on" : "null") . "\n";
-  echo "\r - save      : " .(($clientDTO->save(1)) ? "on" : "null") . "\n";
-  echo "\r - remove    : " .$clientDTO->remove(1) . "\n - findAll   : ";
-  print_r ($clientDTO->findAll());	
+  echo "\r - findById  : " .(($clientRepository->findById(1)) ? "on" : "null") . "\n";
+  echo "\r - save      : " .(($clientRepository->save(1)) ? "on" : "null") . "\n";
+  echo "\r - remove    : " .$clientRepository->remove(1) . "\n - findAll   : ";
+  print_r ($clientRepository->findAll());	
 }
 catch(ConnectionFactoryExcetion $e) {
   echo ($e->getMessage());
