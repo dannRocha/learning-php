@@ -38,7 +38,7 @@ class ClientRepository implements Repository{
     $this->throwConnectionErrorIfTheConnectionIsNull();
     
     return $this->toModel(
-      ...$this->executeQuery(
+      $this->executeQuery(
         'SELECT cliente.nome, cliente.email FROM cliente WHERE numero = :id',
         ['id' => $id]
       )
@@ -67,7 +67,10 @@ class ClientRepository implements Repository{
     $stmt = $conn->prepare($query);
     $stmt->execute($params);
     
-    return $stmt->fetchAll();
+    $result = $stmt->fetchAll();
+    $hasOnlyOneValue = count($result) == 1;
+
+    return ($hasOnlyOneValue)? array_pop($result) : $result;
   }
 
   private function toModel(array $clientDTO): Client {
