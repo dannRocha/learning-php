@@ -1,5 +1,7 @@
 <?php
 
+namespace Interfaces;
+
 interface Repository {
   function findAll(): array;
   function findById(int $id): ?object;

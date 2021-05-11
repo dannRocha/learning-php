@@ -1,5 +1,7 @@
 <?php
 
+namespace Entity;
+
 class Client {
 
   private string $name;

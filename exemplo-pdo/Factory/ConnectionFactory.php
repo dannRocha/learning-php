@@ -1,11 +1,13 @@
 <?php
+namespace Factory;
 
-require_once("exception/ConnectionFactoryException.php");
+use Exceptions\NotImplementedException;
+
 
 class ConnectionFactory {
 
     private static ?self $factory = null;
-    private ?PDO $db = null;
+    private ?\PDO $db = null;
     private string $connectionString;
 
     public function __construct() {
@@ -27,16 +29,16 @@ class ConnectionFactory {
       $this->db = null;
     }
 
-    public function getConnection(): PDO {
+    public function getConnection(): ?\PDO {
         try {
           if (is_null($this->db)) {
-            $this->db = new PDO($this->connectionString);
+            $this->db = new \PDO($this->connectionString);
           }
         }
-        catch(PDOException $e) {
+        catch(\PDOException $e) {
           throw new ConnectionFactoryException($e);
         }
-           
+
         return $this->db;
     }
 

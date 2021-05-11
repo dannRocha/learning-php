@@ -1,13 +1,15 @@
 <?php 
 
-require_once("entity/Client.php");
-require_once("exception/ConnectionFactoryException.php");
-require_once("exception/NotImplementedException.php");
-require_once("factory/ConnectionFactory.php");
-require_once("interface/Repository.php");
+namespace Repositories;
+
+use Entity\Client;
+use Exceptions\NotImplementedException;
+use Exceptions\ConnectionFactoryException;
+use Factory\ConnectionFactory;
+use Interfaces\Repository;
 
 
-class ClientRepository implements Repository{
+class ClientRepository implements Repository {
 
   private ConnectionFactory $conn;
   private const LIMIT_FIND_ALL = 10;
@@ -15,20 +17,23 @@ class ClientRepository implements Repository{
   public function __construct(ConnectionFactory $conn) {
     $this->conn = $conn;
   }
-
+  
   public function __destruct() {
     $this->conn->closeConnection();
   }
+  
   
   public function findAll(): array {
 
     $this->throwConnectionErrorIfTheConnectionIsNull();
     
     $conn = $this->conn->getConnection();
+    
     $clients = $this->executeQuery(
       'SELECT cliente.nome, cliente.email FROM cliente LIMIT :limit',
       ['limit' => $this::LIMIT_FIND_ALL]
-    );	
+    );
+    
     
     return array_map(array(self::class,'toModel'), $clients);
       
@@ -64,6 +69,10 @@ class ClientRepository implements Repository{
   private function executeQuery(string $query, array $params): array {
 
     $conn = $this->conn->getConnection();
+    
+    if(is_null($conn)) return [];
+    
+
     $stmt = $conn->prepare($query);
     $stmt->execute($params);
     
@@ -71,6 +80,7 @@ class ClientRepository implements Repository{
     $hasOnlyOneValue = count($result) == 1;
 
     return ($hasOnlyOneValue)? array_pop($result) : $result;
+
   }
 
   private function toModel(array $clientDTO): Client {
@@ -78,8 +88,10 @@ class ClientRepository implements Repository{
   }
 
   private function throwConnectionErrorIfTheConnectionIsNull(): void {
-    if(is_null($this->conn)) {
-      throw new ConnectionFactoryException();
-    }
+    
+    if(!is_null($this->conn)) return;
+    
+    throw new ConnectionFactoryException(new Exception());
   }
+
 }
