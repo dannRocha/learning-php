@@ -47,7 +47,8 @@ class ClientRepository implements Repository {
   }
   
   public function save(object $entity): object {
-
+    throw new NotImplementedException();
+    return $entity;
   }
   
   public function remove(int $id): bool {
