@@ -11,7 +11,6 @@ main($_SERVER['argv'], count($_SERVER['argv']));
 
 function main(array $argv, int $argc): void {
   try {
-    $clientRepository1 = new ClientRepository(ConnectionFactory::getFactory());
     $clientRepository = new ClientRepository(ConnectionFactoryPDO::getConnection());
 
     print("findAll\n");
