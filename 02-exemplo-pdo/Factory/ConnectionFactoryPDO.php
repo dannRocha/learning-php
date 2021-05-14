@@ -41,6 +41,20 @@ class ConnectionFactoryPDO extends AbstractConnectionFactory {
       return $this->conn;
     }
 
+    public function executeQuery(string $query, array $params): array {
+
+      $conn = $this->openConnection();
+    
+      $stmt = $conn->prepare($query);
+      $stmt->execute($params);
+    
+      $result = $stmt->fetchAll();
+      $hasOnlyOneValue = count($result) == 1;
+  
+      return ($hasOnlyOneValue)? array_pop($result) : $result;
+  
+    }
+
     private function loadConfiguration(): void {
 
       $filenameconfig = 'config/database.ini';

@@ -25,24 +25,22 @@ class ClientRepository implements Repository {
   
   public function findAll(int $page = 51, int $limit = 10): array {
     
-    $clients = $this->executeQuery(
-      'SELECT cliente.nome, cliente.email FROM cliente LIMIT :limit',
-      ['limit' => $this::LIMIT_FIND_ALL]
+    $clients = $this->conn->executeQuery(
+      'SELECT cliente.numero, cliente.nome, cliente.email FROM cliente LIMIT :limit OFFSET :limit * (:page - 1)',
+      ['limit' => $limit, 'page' => $page]
     );
     
     
-    return array_map(array(self::class,'toModel'), $clients);
+    return array_map(fn($client) => $this->toModel($client), $clients);
       
   }
   
   public function findById(int $id): ?object {
     $this->throwConnectionErrorIfTheConnectionIsNull();
     
-    return $this->toModel(
-      $this->executeQuery(
-        'SELECT cliente.nome, cliente.email FROM cliente WHERE numero = :id',
-        ['id' => $id]
-      )
+    $data = $this->conn->executeQuery(
+      'SELECT cliente.numero, cliente.nome, cliente.email FROM cliente WHERE numero = :id',
+      ['id' => $id]
     );
   }
   
@@ -60,23 +58,6 @@ class ClientRepository implements Repository {
     throw new NotImplementedException();
     
     return false;
-  }
-
-  private function executeQuery(string $query, array $params): array {
-
-    $conn = $this->conn->getConnection();
-    
-    if(is_null($conn)) return [];
-    
-
-    $stmt = $conn->prepare($query);
-    $stmt->execute($params);
-    
-    $result = $stmt->fetchAll();
-    $hasOnlyOneValue = count($result) == 1;
-
-    return ($hasOnlyOneValue)? array_pop($result) : $result;
-
   }
 
   private function toModel(array $clientDTO): Client {
