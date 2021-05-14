@@ -4,17 +4,15 @@ namespace Repositories;
 
 use Entity\Client;
 use Exceptions\NotImplementedException;
-use Exceptions\ConnectionFactoryException;
-use Factory\ConnectionFactory;
+use Factory\AbstractConnectionFactory;
 use Interfaces\Repository;
 
 
 class ClientRepository implements Repository {
 
-  private ConnectionFactory $conn;
-  private const LIMIT_FIND_ALL = 10;
+  private AbstractConnectionFactory $conn;
   
-  public function __construct(ConnectionFactory $conn) {
+  public function __construct(AbstractConnectionFactory $conn) {
     $this->conn = $conn;
   }
   
