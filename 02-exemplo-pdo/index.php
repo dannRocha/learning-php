@@ -3,7 +3,7 @@ require_once 'autoload.php';
 
 use Exceptions\NotImplementedException;
 use Exceptions\ConnectionFactoryException;
-use Factory\ConnectionFactory;
+use Factory\ConnectionFactoryPDO;
 use Repositories\ClientRepository;
 
 
@@ -11,8 +11,8 @@ main($_SERVER['argv'], count($_SERVER['argv']));
 
 function main(array $argv, int $argc): void {
   try {
-    $clientRepository = new ClientRepository(ConnectionFactory::getFactory());
     $clientRepository1 = new ClientRepository(ConnectionFactory::getFactory());
+    $clientRepository = new ClientRepository(ConnectionFactoryPDO::getConnection());
 
     print("findAll\n");
     $clients = $clientRepository->findAll();
