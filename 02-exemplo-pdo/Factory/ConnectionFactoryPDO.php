@@ -43,7 +43,7 @@ class ConnectionFactoryPDO extends AbstractConnectionFactory {
 
     private function loadConfiguration(): void {
 
-    $filenameconfig = 'config/database.ini';
+      $filenameconfig = 'config/database.ini';
       $params = parse_ini_file($filenameconfig);
       
       $this->connectionString = sprintf("pgsql:host=%s;port=%d;dbname=%s;user=%s;password=%s",
