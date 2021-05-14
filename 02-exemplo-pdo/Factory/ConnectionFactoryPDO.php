@@ -4,7 +4,7 @@ namespace Factory;
 use Exceptions\NotImplementedException;
 
 
-class ConnectionFactory {
+class ConnectionFactoryPDO extends AbstractConnectionFactory {
 
     private static ?self $factory = null;
     private ?\PDO $db = null;
