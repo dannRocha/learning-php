@@ -28,7 +28,7 @@ class ConnectionFactoryPDO extends AbstractConnectionFactory {
       $this->conn = null;
     }
 
-    public function getConnection(): ?\PDO {
+    protected function openConnection(): ?object {
       try {
         if (is_null($this->conn)) {
           $this->conn = new \PDO($this->connectionString);
