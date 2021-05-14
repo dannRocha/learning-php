@@ -1,7 +1,7 @@
 <?php
 namespace Factory;
 
-use Exceptions\NotImplementedException;
+use Exceptions\ConnectionFactoryException;
 
 
 class ConnectionFactoryPDO extends AbstractConnectionFactory {
