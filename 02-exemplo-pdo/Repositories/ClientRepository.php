@@ -39,6 +39,11 @@ class ClientRepository implements Repository {
       'SELECT cliente.numero, cliente.nome, cliente.email FROM cliente WHERE numero = :id',
       ['id' => $id]
     );
+
+    if(!count($data)) {
+      return null;  
+    }
+    return $this->toModel($data);
   }
   
   public function save(object $entity): object {
