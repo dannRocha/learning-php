@@ -6,21 +6,20 @@ use Exceptions\ConnectionFactoryException;
 
 class ConnectionFactoryPDO extends AbstractConnectionFactory {
 
-    private static ?self $factory = null;
     private ?\PDO $db = null;
+    private static ?self $instance = null;
     private string $connectionString;
 
     public function __construct() {
       $this->loadConfiguration();
     }
 
-
-    public static function getFactory(): self {
-      if (is_null(self::$factory)) {
-        self::$factory = new ConnectionFactory();
+    public static function getConnection(): self {
+      if (is_null(self::$instance)) {
+        self::$instance = new ConnectionFactoryPDO();
       }
         
-      return self::$factory;
+      return self::$instance;
     }
 
     public function closeConnection(): void {
