@@ -34,7 +34,6 @@ class ClientRepository implements Repository {
   }
   
   public function findById(int $id): ?object {
-    $this->throwConnectionErrorIfTheConnectionIsNull();
     
     $data = $this->conn->executeQuery(
       'SELECT cliente.numero, cliente.nome, cliente.email FROM cliente WHERE numero = :id',
@@ -44,15 +43,10 @@ class ClientRepository implements Repository {
   
   public function save(object $entity): object {
 
-    $this->throwConnectionErrorIfTheConnectionIsNull();
-    throw new NotImplementedException();
-
-    return false;
   }
   
   public function remove(int $id): bool {
 
-    $this->throwConnectionErrorIfTheConnectionIsNull();
     throw new NotImplementedException();
     
     return false;
