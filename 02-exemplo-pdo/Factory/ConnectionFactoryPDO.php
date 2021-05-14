@@ -6,8 +6,8 @@ use Exceptions\ConnectionFactoryException;
 
 class ConnectionFactoryPDO extends AbstractConnectionFactory {
 
-    private ?\PDO $db = null;
     private static ?self $instance = null;
+    private ?\PDO $conn = null;
     private string $connectionString;
 
     public function __construct() {
@@ -23,22 +23,22 @@ class ConnectionFactoryPDO extends AbstractConnectionFactory {
     }
 
     public function closeConnection(): void {
-      if(is_null($this->db)) return;
+      if(is_null($this->conn)) return;
       
-      $this->db = null;
+      $this->conn = null;
     }
 
     public function getConnection(): ?\PDO {
       try {
-        if (is_null($this->db)) {
-          $this->db = new \PDO($this->connectionString);
+        if (is_null($this->conn)) {
+          $this->conn = new \PDO($this->connectionString);
         }
       }
       catch(\PDOException $e) {
         throw new ConnectionFactoryException($e);
       }
 
-      return $this->db;
+      return $this->conn;
     }
 
     private function loadConfiguration(): void {
