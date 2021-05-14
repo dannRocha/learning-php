@@ -21,7 +21,7 @@ class ClientRepository implements Repository {
   }
   
   
-  public function findAll(int $page = 51, int $limit = 10): array {
+  public function findAll(int $page = 1, int $limit = 10): array {
     
     $clients = $this->conn->executeQuery(
       'SELECT cliente.numero, cliente.nome, cliente.email FROM cliente LIMIT :limit OFFSET :limit * (:page - 1)',
