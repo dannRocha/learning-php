@@ -23,11 +23,7 @@ class ClientRepository implements Repository {
   }
   
   
-  public function findAll(): array {
-
-    $this->throwConnectionErrorIfTheConnectionIsNull();
-    
-    $conn = $this->conn->getConnection();
+  public function findAll(int $page = 51, int $limit = 10): array {
     
     $clients = $this->executeQuery(
       'SELECT cliente.nome, cliente.email FROM cliente LIMIT :limit',
@@ -50,7 +46,7 @@ class ClientRepository implements Repository {
     );
   }
   
-  public function save(object $entity): bool {
+  public function save(object $entity): object {
 
     $this->throwConnectionErrorIfTheConnectionIsNull();
     throw new NotImplementedException();
@@ -84,14 +80,7 @@ class ClientRepository implements Repository {
   }
 
   private function toModel(array $clientDTO): Client {
-    return new Client($clientDTO['nome'], $clientDTO['email']);
-  }
-
-  private function throwConnectionErrorIfTheConnectionIsNull(): void {
-    
-    if(!is_null($this->conn)) return;
-    
-    throw new ConnectionFactoryException(new Exception());
+    return new Client($clientDTO['nome'], $clientDTO['email'], intval($clientDTO['numero']));
   }
 
 }
