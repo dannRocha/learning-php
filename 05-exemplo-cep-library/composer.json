@@ -1,0 +1,24 @@
+{
+    "name": "address/cep",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Daniel Rocha",
+            "email": "rochadaniel@acad.ifma.edu"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.0"
+    },
+    "scripts": {
+        "run": "php ./index.php"
+    },
+    "autoload": {
+        "psr-0": {
+            "Search": "src/"
+        },
+        "psr-4": {
+            "Address\\Cep\\": "src/"
+        }
+    }
+}
