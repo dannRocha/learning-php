@@ -1,26 +1,28 @@
-<?php 
+<?php
+
 declare(strict_types=1);
 
 use Address\Cep\Search;
 use PHPUnit\Framework\TestCase;
 
-
-final class SearchTest extends TestCase {
+final class SearchTest extends TestCase
+{
 
   /**
    * @dataProvider dataTest
    */
-  public function testGetAddressFromZipCode(string $input, array $expect): void {
-    
-    $search = new Search();
+    public function testGetAddressFromZipCode(string $input, array $expect): void
+    {
+        $search = new Search();
 
-    $result = $search->getAddressFromZipCode($input);
-    $this->assertEquals($result, $expect);
-  }
+        $result = $search->getAddressFromZipCode($input);
+        $this->assertEquals($result, $expect);
+    }
 
-  public function dataTest() {
-    return [
-      "Recanto dos Pássaros" => [
+    public function dataTest()
+    {
+        return [
+        "Recanto dos Pássaros" => [
         "65058777",
          [
           "cep" => "65058-777",
@@ -34,8 +36,8 @@ final class SearchTest extends TestCase {
           "ddd" => "98",
           "siafi" => "0921"
          ]
-      ],
-      "Cidade Operária" => [
+        ],
+        "Cidade Operária" => [
         "65058001",
         [
           "cep" => "65058-001",
@@ -48,9 +50,9 @@ final class SearchTest extends TestCase {
           "gia" => "",
           "ddd" => "98",
           "siafi" => "0921"
-        
+
         ]
-      ]
-    ];
-  }
+        ]
+        ];
+    }
 }
