@@ -16,7 +16,7 @@ class Router {
 
   public static function get(string $uri, callable $fn) {
     
-    if(!array_key_exists($url, self::$ROUTER[self::GET_METHOD])) {
+    if(!array_key_exists($uri, self::$ROUTER[self::GET_METHOD])) {
 
       self::$ROUTER[self::GET_METHOD][self::standardizeURL($uri)] = fn() => 
         $fn($_GET);
@@ -26,12 +26,16 @@ class Router {
 
   public static function post(string $uri, callable $fn) {
     
-    if(!array_key_exists($url, self::$ROUTER[self::POST_METHOD])) {
+    if(!array_key_exists($uri, self::$ROUTER[self::POST_METHOD])) {
 
       self::$ROUTER[self::POST_METHOD][self::standardizeURL($uri)] = fn() => 
         $fn(file_get_contents( 'php://input' ), true );
 
     } 
+  }
+
+  public static function use(string $class) {
+    new $class();
   }
 
   private static function standardizeURL(string $uri): string {

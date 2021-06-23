@@ -14,9 +14,9 @@ class ProductController extends Router {}
 ProductController::get("/produtos", function($request){
   Render::view("/View/Page/Product", [
     'products' => [
-      "Shoes",
-      "Shirt",
-      "Pants"
+      ['name' => 'Shoes', 'price' => 20.00],
+      ['name' => 'Shirt', 'price' => 10.00],
+      ['name' => 'Pants', 'price' => 15.50]
     ]]);
 });
 
